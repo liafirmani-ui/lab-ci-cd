@@ -15,7 +15,7 @@ data "aws_lb" "this" {
 
 resource "aws_ecs_service" "this" {
   name                          = "app-service"
-  task_definition               = "ci-cd-app"
+  task_definition               = "lab-ci-cd"
   cluster                       = var.cluster_name
   desired_count                 = var.desired_count
   launch_type                   = "FARGATE"
@@ -28,13 +28,13 @@ resource "aws_ecs_service" "this" {
 
   load_balancer {
     target_group_arn = data.aws_lb_target_group.this.arn
-    container_name   = "ci-cd-app"
+    container_name   = "lab-ci-cd"
     container_port   = 8000
   }
 
 }
 
 resource "aws_cloudwatch_log_group" "this" {
-  name              = "/ecs/ci-cd-app"
+  name              = "/ecs/lab-ci-cd"
   retention_in_days = 7
 }
